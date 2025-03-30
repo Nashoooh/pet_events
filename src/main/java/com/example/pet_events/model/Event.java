@@ -3,6 +3,7 @@ package com.example.pet_events.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Event {
     private String id;
     private String name;

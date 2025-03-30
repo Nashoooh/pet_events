@@ -1,23 +1,53 @@
 package com.example.pet_events.service;
 
 import com.example.pet_events.exception.EventNotFoundException;
-import com.example.pet_events.exception.ParticipantNotFoundException;
 import com.example.pet_events.model.Event;
 import com.example.pet_events.model.Participant;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class EventService {
     private final List<Event> events = new ArrayList<>();
+    private List<Participant> participantList = new ArrayList<>();
 
-    // Metodo para registrar un nuevo evento (estaba implementado en un POST pero no se usara en esta entrega)
-    public Event createEvent(Event event) {
-        validateEvent(event); // Primero valida los campos del evento
-        events.add(event); // Luego agrega el evento a la lista de eventos
-        return event;
+    @PostConstruct
+    public void init() {
+        
+        // Crear participantes en una lista
+        participantList.add(new Participant("1", "Juan Pérez", "Firulais", "Perro", 3));
+        participantList.add(new Participant("2", "María López", "Michi", "Gato", 2));
+        participantList.add(new Participant("3", "Carlos Sánchez", "Rex", "Perro", 5));
+        participantList.add(new Participant("4", "Ana Gómez", "Nemo", "Pez", 1));
+        participantList.add(new Participant("5", "Luis Torres", "Luna", "Gato", 4));
+        participantList.add(new Participant("6", "Sofía Díaz", "Rocky", "Perro", 6));
+        participantList.add(new Participant("7", "Pedro Ramírez", "Kiwi", "Ave", 2));
+        participantList.add(new Participant("8", "Laura Castillo", "Max", "Perro", 7));
+        participantList.add(new Participant("9", "Diego Fernández", "Bella", "Conejo", 3));
+    
+        // Crear eventos y asociar participantes
+        Event events1 = new Event("1", "Adopción de Mascotas", "Evento de adopción de mascotas", "2023-10-15", "Parque Bicentenario");
+        events1.addParticipant(participantList.get(0));
+        events1.addParticipant(participantList.get(1));
+        events1.addParticipant(participantList.get(2));
+    
+        Event events2 = new Event("2", "Tenencia Responsable", "Charla sobre tenencia responsable de mascotas", "2023-10-20", "Centro Cultural La Moneda");
+        events2.addParticipant(participantList.get(3));
+        events2.addParticipant(participantList.get(4));
+        events2.addParticipant(participantList.get(5));
+    
+        Event events3 = new Event("3", "Cuidados de Salud", "Taller sobre cuidados de salud para mascotas", "2023-10-25", "Estadio Nacional");
+        events3.addParticipant(participantList.get(6));
+        events3.addParticipant(participantList.get(7));
+        events3.addParticipant(participantList.get(8));
+    
+        // Agregar eventos a la lista
+        events.add(events1);
+        events.add(events2);
+        events.add(events3);
     }
 
     // Este metodo obtiene todos los eventos registrados
@@ -33,42 +63,10 @@ public class EventService {
                 .orElseThrow(() -> new EventNotFoundException("Evento no encontrado con ID: " + id)); // Si no lo encuentra lanza la excepción
     }
 
-    // Inscribir un participante en un evento (lo habia implementado en un POST pero no se usara en esta entrega)
-    public Event enrollParticipant(String eventId, Participant participant) {
-        Event event = getEventById(eventId); // Busca el evento por ID
-        event.addParticipant(participant);  // Agrega el participante al evento encontrado
-        return event;
-    }
-
-    // Este Metodo valida los campos del evento, en este caso solo valide que no sean nulos o vacíos
-    private void validateEvent(Event event) {
-        if (event.getName() == null || event.getName().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del evento es obligatorio.");
-        }
-        if (event.getDescription() == null || event.getDescription().isEmpty()) {
-            throw new IllegalArgumentException("La descripción del evento es obligatoria.");
-        }
-        if (event.getDate() == null || event.getDate().isEmpty()) {
-            throw new IllegalArgumentException("La fecha del evento es obligatoria.");
-        }
-        if (event.getLocation() == null || event.getLocation().isEmpty()) {
-            throw new IllegalArgumentException("La ubicación del evento es obligatoria.");
-        }
-    }
-
     // Metodo para obtener los participantes de un evento en particular
     public List<Participant> getParticipantsByEventId(String eventId) {
         Event event = getEventById(eventId); // Reutiliza el método existente para obtener el evento
         return event.getParticipants(); // Devuelve la lista de participantes del evento
     }
 
-    // Función para eliminar un participante de un evento (estaba implementado en un DELETE pero no se usara en esta entrega)
-    public Event removeParticipant(String eventId, String participantId) {
-        Event event = getEventById(eventId);
-        boolean removed = event.getParticipants().removeIf(participant -> participant.getId().equals(participantId));
-        if (!removed) {
-            throw new ParticipantNotFoundException("Participante no encontrado con ID: " + participantId);
-        }
-        return event;
-    }
 }

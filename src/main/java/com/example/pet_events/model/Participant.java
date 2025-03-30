@@ -1,5 +1,6 @@
 package com.example.pet_events.model;
 
+
 public class Participant {
     private String id;
     private String name;
