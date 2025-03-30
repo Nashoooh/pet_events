@@ -9,7 +9,7 @@ public class Event {
     private String description;
     private String date;
     private String location;
-    private List<Participant> participants;
+    private List<Participant> participants; // Lista de participantes, un evento puede estar asociado a varios participantes
 
     public Event(String id, String name, String description, String date, String location) {
         this.id = id;
