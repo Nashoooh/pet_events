@@ -54,10 +54,12 @@ public class Event {
         this.date = date;
     }
 
+    // Este metodo permite obtener la lista de participantes asociados al evento
     public List<Participant> getParticipants() {
         return participants;
     }
 
+    // Este metodo permite agregar un participante a la lista de participantes asociados al evento
     public void addParticipant(Participant participant) {
         this.participants.add(participant);
     }
