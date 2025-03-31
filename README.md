@@ -30,7 +30,7 @@ Este proyecto es un API Rest de Eventos de Mascotas, diseñado para aprender los
 1. **Clonar el repositorio**:
    Abrir una terminal 
    git clone https://github.com/Nashoooh/pet_events.git
-   cd proyecto-peliculas
+   cd pet_events
 
 2. **Compilar proyecto**:
     mvn clean install
