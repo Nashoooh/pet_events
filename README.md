@@ -1,4 +1,4 @@
-# Peliculas
+# Eventos de Mascotas
 Proyecto Spring Boot con Eventos de Mascotas - Exp1_S3_Ignacio_Andana
 
 ## Descripción
