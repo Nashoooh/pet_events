@@ -1,6 +1,5 @@
 package com.example.pet_events.controller;
 
-import com.example.pet_events.exception.EventNotFoundException;
 import com.example.pet_events.model.Event;
 import com.example.pet_events.model.Participant;
 import com.example.pet_events.service.EventService;
