@@ -32,29 +32,15 @@ public class EventController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id) {
-        try {
-            Event event = eventService.getEventById(id);
-            // Devuelve el evento con código 200 OK
-            return ResponseEntity.ok(event);
-        } catch (EventNotFoundException e) {
-            // Devuelve 404 si el evento consultado no existe
-            return ResponseEntity.notFound().build();
-        }
+        Event event = eventService.getEventById(id); // Si no se encuentra, se lanza la excepción
+        return ResponseEntity.ok(event); // Devuelve el evento con código 200 OK
     }
 
     @GetMapping("/{eventId}/participants")
     public ResponseEntity<List<Participant>> getParticipantsByEventId(@PathVariable String eventId) {
-        try {
-            List<Participant> participants = eventService.getParticipantsByEventId(eventId);
-            if (participants.isEmpty()) {
-                // Devuelve una lista vacía con código 200 OK (existe el evento pero no tiene participantes)
-                return ResponseEntity.ok(participants);
-            }
-            return ResponseEntity.ok(participants);
-        } catch (EventNotFoundException e) {
-            // Devuelve 404 si el evento consultado no existe
-            return ResponseEntity.notFound().build();
-        }
+        List<Participant> participants = eventService.getParticipantsByEventId(eventId);
+        // Devuelve una lista vacía con código 200 OK si no hay participantes
+        return ResponseEntity.ok(participants);
     }
 
 }
