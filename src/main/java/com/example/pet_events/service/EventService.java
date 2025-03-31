@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class EventService {
     private final List<Event> events = new ArrayList<>();
-    private List<Participant> participantList = new ArrayList<>();
+    private final List<Participant> participantList = new ArrayList<>();
 
     @PostConstruct
     public void init() {
