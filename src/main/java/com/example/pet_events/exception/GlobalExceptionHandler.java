@@ -18,4 +18,12 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage()); // Aquí se incluye el mensaje de la excepción
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(ParticipantNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleParticipantNotFoundException(ParticipantNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Participante no encontrado");
+        errorResponse.put("message", ex.getMessage()); // Aquí se incluye el mensaje de la excepción
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
 }

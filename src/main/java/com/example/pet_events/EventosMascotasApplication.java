@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class PetEventsApplication {
+public class EventosMascotasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PetEventsApplication.class, args);
+		SpringApplication.run(EventosMascotasApplication.class, args);
 	}
 
 }
