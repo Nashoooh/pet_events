@@ -41,7 +41,7 @@ public class EventController {
     }
 
     // GET /eventos/{id} - Obtener un evento por ID
-    @GetMapping("/{id}")
+    @GetMapping("/{idEvento}")
     public ResponseEntity<Evento> getEventoById(@PathVariable Long idEvento) {
         Evento evento = eventoService.getEventoById(idEvento);
         return ResponseEntity.ok(evento);
