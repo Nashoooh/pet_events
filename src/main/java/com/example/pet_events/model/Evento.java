@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "EVENTO")
@@ -18,15 +21,22 @@ public class Evento {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @NotBlank(message = "El nombre del evento no puede estar vacío")
+    @Size(max = 255, message = "El nombre del evento no puede tener más de 255 caracteres")
     @Column(name = "NOMBRE", nullable = false, length = 255)
     private String nombreEvento;
 
+    @NotBlank(message = "La descripción no puede estar vacía")
+    @Size(max = 1000, message = "La descripción no puede tener más de 1000 caracteres")
     @Column(name = "DESCRIPCION", nullable = false, length = 1000)
     private String descripcion;
 
+    @FutureOrPresent(message = "La fecha del evento no puede ser anterior a la fecha actual")
     @Column(name = "FECHA", nullable = false)
     private LocalDate fecha;
 
+    @NotBlank(message = "La ubicación no puede estar vacía")
+    @Size(max = 255, message = "La ubicación no puede tener más de 255 caracteres")
     @Column(name = "UBICACION", nullable = false, length = 255)
     private String ubicacion;
 
