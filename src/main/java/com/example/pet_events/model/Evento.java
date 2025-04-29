@@ -2,6 +2,10 @@ package com.example.pet_events.model;
 
 import java.time.LocalDate;
 
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +18,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "EVENTO")
-public class Evento {
+public class Evento extends RepresentationModel<Evento> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,42 +56,52 @@ public class Evento {
     }
 
     // Getters and Setters
+    @JsonProperty("id")
     public Long getId() {
         return id;
     }
 
+    @JsonProperty("id")
     public void setId(Long id) {
         this.id = id;
     }
 
+    @JsonProperty("nombreEvento")
     public String getName() {
         return nombreEvento;
     }
 
+    @JsonProperty("nombreEvento")
     public void setName(String nombreEvento) {
         this.nombreEvento = nombreEvento;
     }
 
+    @JsonProperty("descripcion")
     public String getDescription() {
         return descripcion;
     }
 
+    @JsonProperty("descripcion")
     public void setDescription(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    @JsonProperty("fecha")
     public LocalDate getDate() {
         return fecha;
     }
 
+    @JsonProperty("fecha")
     public void setDate(LocalDate fecha) {
         this.fecha = fecha;
     }
 
+    @JsonProperty("ubicacion")
     public String getLocation() {
         return ubicacion;
     }
 
+    @JsonProperty("ubicacion")
     public void setLocation(String ubicacion) {
         this.ubicacion = ubicacion;
     }

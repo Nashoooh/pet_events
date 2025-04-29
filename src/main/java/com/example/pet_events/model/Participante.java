@@ -1,5 +1,9 @@
 package com.example.pet_events.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +19,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "PARTICIPANTE")
-public class Participante {
+public class Participante extends RepresentationModel<Participante> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,50 +61,62 @@ public class Participante {
     }
 
     // Getters and Setters
+    @JsonProperty("id")
     public Long getId() {
         return id;
     }
 
+    @JsonProperty("id")
     public void setId(Long id) {
         this.id = id;
     }
 
+    @JsonProperty("nombre")
     public String getName() {
         return nombre;
     }
 
+    @JsonProperty("nombre")
     public void setName(String nombre) {
         this.nombre = nombre;
     }
 
+    @JsonProperty("nombreMascota")
     public String getPetName() {
         return nombreMascota;
     }
 
+    @JsonProperty("nombreMascota")
     public void setPetName(String nombreMascota) {
         this.nombreMascota = nombreMascota;
     }
 
+    @JsonProperty("tipoMascota")
     public String getPetType() {
         return tipoMascota;
     }
 
+    @JsonProperty("tipoMascota")
     public void setPetType(String tipoMascota) {
         this.tipoMascota = tipoMascota;
     }
 
+    @JsonProperty("edadMascota")
     public int getPetAge() {
         return edadMascota;
     }
 
+    @JsonProperty("edadMascota")
     public void setPetAge(int edadMascota) {
         this.edadMascota = edadMascota;
     }
 
+    @JsonProperty("evento")
     public Evento getEvento() {
         return evento;
     }
 
+    @JsonProperty("evento")
     public void setEvento(Evento evento) {
         this.evento = evento;
     }

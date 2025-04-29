@@ -10,13 +10,13 @@ public class EventoConParticipantesDTO {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("nombre")
+    @JsonProperty("nombreEvento")
     private String nombre;
 
     @JsonProperty("fecha")
     private LocalDate fecha;
 
-    @JsonProperty("lugar")
+    @JsonProperty("ubicacion")
     private String lugar;
 
     @JsonProperty("descripcion")
