@@ -1,0 +1,4 @@
+com\example\pet_events\controller\EventControllerTest.class
+com\example\pet_events\service\ParticipanteServiceImplTest.class
+com\example\pet_events\PetEventsApplicationTests.class
+com\example\pet_events\service\EventoServiceImplTest.class

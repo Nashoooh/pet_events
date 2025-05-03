@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 @RestController
 @RequestMapping("/eventos")
@@ -28,10 +33,21 @@ public class EventController {
 
     // GET /eventos - Obtener todos los eventos
     @GetMapping
-    public ResponseEntity<List<Evento>> getAllEventos() {
+    public ResponseEntity<List<EntityModel<Evento>>> getAllEventos() {
         List<Evento> eventos = eventoService.getAllEventos();
-        return ResponseEntity.ok(eventos);
+    
+        List<EntityModel<Evento>> eventoModels = eventos.stream()
+                .map(evento -> {
+                    EntityModel<Evento> model = EntityModel.of(evento);
+                    Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(EventController.class).getEventoById(evento.getId())).withSelfRel();
+                    model.add(selfLink);
+                    return model;
+                })
+                .toList();
+    
+        return ResponseEntity.ok(eventoModels);
     }
+    
 
     // POST /eventos - Crear un nuevo evento
     @PostMapping
@@ -42,44 +58,42 @@ public class EventController {
 
     // GET /eventos/{id} - Obtener un evento por ID
     @GetMapping("/{idEvento}")
-    public ResponseEntity<Evento> getEventoById(@PathVariable Long idEvento) {
+    public ResponseEntity<EntityModel<Evento>> getEventoById(@PathVariable Long idEvento) {
         Evento evento = eventoService.getEventoById(idEvento);
-        return ResponseEntity.ok(evento);
+    
+        EntityModel<Evento> model = EntityModel.of(evento);
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(EventController.class).getEventoById(idEvento)).withSelfRel();
+        Link allEventosLink = WebMvcLinkBuilder.linkTo(methodOn(EventController.class).getAllEventos()).withRel("eventos");
+        model.add(selfLink, allEventosLink);
+    
+        return ResponseEntity.ok(model);
     }
+    
 
     // POST /eventos/{eventoId}/participantes - Agregar un participante a un evento
     @PostMapping("/{eventoId}/participantes")
-    public ResponseEntity<EventoConParticipantesDTO> addParticipanteToEvento(@PathVariable Long eventoId, @RequestBody Participante participante) {
-
-        // Obtener el evento por ID
+    public ResponseEntity<EntityModel<EventoConParticipantesDTO>> addParticipanteToEvento(
+            @PathVariable Long eventoId, @RequestBody Participante participante) {
+    
         Evento evento = eventoService.getEventoById(eventoId);
-
-        // Asociar el participante al evento
         participante.setEvento(evento);
-
-        // Guardar el participante utilizando el método del servicio
         participanteService.createParticipante(participante);
-
-        // Obtener todos los participantes del evento desde el repositorio
         List<Participante> participantes = participanteService.getParticipantByEvent(eventoId);
-
-        // Convertir los participantes a DTOs
+    
         List<ParticipanteDTO> participantesDTO = participantes.stream()
-                .map(p -> new ParticipanteDTO(p.getId(), p.getName(), p.getPetName(), p.getPetType(),p.getPetAge()))
+                .map(p -> new ParticipanteDTO(p.getId(), p.getName(), p.getPetName(), p.getPetType(), p.getPetAge()))
                 .toList();
-
-        // Crear el DTO de respuesta
-        EventoConParticipantesDTO eventoConParticipantesDTO = new EventoConParticipantesDTO(
-            evento.getId(),
-            evento.getName(),
-            evento.getDate(),
-            evento.getLocation(),
-            evento.getDescription(),
-            participantesDTO
-        );
-
-        return ResponseEntity.ok(eventoConParticipantesDTO);
+    
+        EventoConParticipantesDTO dto = new EventoConParticipantesDTO(
+                evento.getId(), evento.getName(), evento.getDate(), evento.getLocation(), evento.getDescription(), participantesDTO);
+    
+        EntityModel<EventoConParticipantesDTO> model = EntityModel.of(dto);
+        model.add(WebMvcLinkBuilder.linkTo(methodOn(EventController.class).getEventoById(eventoId)).withRel("evento"));
+        model.add(WebMvcLinkBuilder.linkTo(methodOn(EventController.class).getParticipantesByEventoId(eventoId)).withRel("participantes"));
+    
+        return ResponseEntity.ok(model);
     }
+    
 
     // GET /eventos/{eventoId}/participantes - Obtener todos los participantes de un evento
     @GetMapping("/{eventoId}/participantes")
