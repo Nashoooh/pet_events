@@ -1,13 +1,18 @@
 # Eventos de Mascotas
-Proyecto Spring Boot con Eventos de Mascotas - Exp1_S3_Ignacio_Andana
+Proyecto Spring Boot con Eventos de Mascotas - Exp3_S8_Ignacio_Andana
 
 ## Descripción
-Este proyecto es un API Rest de Eventos de Mascotas, diseñado para aprender los conceptos básicos de Spring Boot. Permite realizar operaciones de consulta sobre una lista de eventos y participantes almacenadas en memoria utilizando un ArrayList con datos predefinidos.
+Este proyecto es un API Rest de Eventos de Mascotas, diseñado para aprender los conceptos básicos de Spring Boot. Permite realizar operaciones CRUD sobre una lista de eventos y participantes almacenadas en BD Oracle, realizar pruebas unitarias y levantar proyecto localmente y en Docker.
 
 ## Funcionalidades
-- GET /events: Obtiene todos los eventos existentes (array en memoria en este caso).
-- GET /events/{id}: Obtiene un evento según el id ingresado.
-- GET /events/{eventId}/participants: Obtiene la lista de participantes asociados a un evento en base al id ingresado.
+- GET /eventos
+- POST /eventos
+- GET /eventos/{id}
+- POST /eventos/{eventoId}/participantes
+- GET /eventos/{eventoId}/participantes
+- DELETE /eventos/{eventoId}/participantes/{participanteId}
+- PUT /eventos/{eventoId}/participantes/{participanteId}
+
 
 ## Tecnologías
 - Java 21
